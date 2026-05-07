@@ -15,13 +15,6 @@ public class WebAppDbContext(DbContextOptions<WebAppDbContext> options) : DbCont
             entity.Property(x => x.Name).IsRequired();
             entity.Property(x => x.Location).IsRequired();
             entity.Property(x => x.Quantity).HasDefaultValue(1);
-
-            entity.HasData(
-                new HouseholdItem { Id = 1, Name = "Mąka", Location = "Szafka", Quantity = 3 },
-                new HouseholdItem { Id = 2, Name = "Powidła", Location = "Spiżarka" },
-                new HouseholdItem { Id = 3, Name = "Mleko", Location = "Lodówka" },
-                new HouseholdItem { Id = 4, Name = "Chleb", Location = "Zamrażarka" }
-            );
         });
     }
 }

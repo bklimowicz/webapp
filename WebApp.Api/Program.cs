@@ -36,10 +36,32 @@ app.MapGet("/items", async (WebAppDbContext dbContext) =>
 
 app.MapPost("/items", async (CreateHouseholdItemRequest request, WebAppDbContext dbContext) =>
 {
+    var errors = new Dictionary<string, string[]>();
+
+    if (string.IsNullOrWhiteSpace(request.Name))
+    {
+        errors["name"] = ["Name is required."];
+    }
+
+    if (string.IsNullOrWhiteSpace(request.Location))
+    {
+        errors["location"] = ["Location is required."];
+    }
+
+    if (request.Quantity is < 1)
+    {
+        errors["quantity"] = ["Quantity must be greater than 0."];
+    }
+
+    if (errors.Count > 0)
+    {
+        return Results.ValidationProblem(errors);
+    }
+
     var item = new HouseholdItem
     {
-        Name = request.Name,
-        Location = request.Location,
+        Name = request.Name.Trim(),
+        Location = request.Location.Trim(),
         Quantity = request.Quantity ?? 1
     };
 
