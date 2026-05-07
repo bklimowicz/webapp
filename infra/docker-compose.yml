@@ -1,55 +1,16 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:17-alpine
+    container_name: webapp-postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: pg
-      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: webapp
+      POSTGRES_USER: webapp
+      POSTGRES_PASSWORD: webapp
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    depends_on:
-      - postgres
-    ports:
-      - "80:80"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    networks:
-      - default
-  rabbitmq:
-    image: rabbitmq:latest
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
-    volumes:
-      - rabbitmq:/var/lib/rabbitmq
-    networks:
-      - default
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    environment:
-      REDIS_PASSWORD: redis
-    volumes:
-      - redis:/data
-    networks:
-      - default
-
-networks:
-  default:
-    driver: bridge
+      - webapp-postgres-data:/var/lib/postgresql/data
 
 volumes:
-  rabbitmq:
-  pgdata:
-  pgadmin:
-  redis:
+  webapp-postgres-data:
