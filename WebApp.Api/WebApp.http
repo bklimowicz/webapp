@@ -1,6 +1,37 @@
 @WebApp_HostAddress = http://localhost:5211
 
-GET {{WebApp_HostAddress}}/weatherforecast/
+GET {{WebApp_HostAddress}}/api/items
 Accept: application/json
+
+###
+
+GET {{WebApp_HostAddress}}/api/items/1
+Accept: application/json
+
+###
+
+POST {{WebApp_HostAddress}}/api/items
+Content-Type: application/json
+
+{
+  "name": "Herbata",
+  "location": "Szafka",
+  "quantity": 2
+}
+
+###
+
+PUT {{WebApp_HostAddress}}/api/items/1
+Content-Type: application/json
+
+{
+  "name": "Mąka",
+  "location": "Szafka",
+  "quantity": 5
+}
+
+###
+
+DELETE {{WebApp_HostAddress}}/api/items/1
 
 ###
